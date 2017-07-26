@@ -10,6 +10,6 @@ server_scripts{
 }
 
 client_scripts{ 
-  "Proxy.lua",
+  "lib/Proxy.lua",
   "client.lua"
 }

@@ -6,7 +6,7 @@ MySQL = module("vrp_mysql", "MySQL")
 vRP = Proxy.getInterface("vRP")
 vRPclient = Tunnel.getInterface("vRP","vRP_showroom")
 
--- vehicle db and lscustoms compatibility
+-- vehicle db / garage and lscustoms compatibility
 MySQL.createCommand("vRP/showroom_columns", [[
 ALTER TABLE vrp_user_vehicles ADD IF NOT EXISTS veh_type varchar(255) NOT NULL DEFAULT 'default' ;
 ALTER TABLE vrp_user_vehicles ADD IF NOT EXISTS vehicle_plate varchar(255) NOT NULL;
@@ -26,7 +26,7 @@ AddEventHandler('veh_SR:CheckMoneyForVeh', function(vehicle, price ,veh_type)
 	else
 		if vRP.tryFullPayment({user_id,price}) then
 			vRP.getUserIdentity({user_id, function(identity)
-              MySQL.query("vRP/add_custom_vehicle", {user_id = user_id, vehicle = vehicle, vehicle_plate = identity.registration, veh_type = veh_type})
+              MySQL.query("vRP/add_custom_vehicle", {user_id = user_id, vehicle = vehicle, vehicle_plate = "P "..identity.registration, veh_type = veh_type})
 			end})
 			
 			TriggerClientEvent('veh_SR:CloseMenu', player, vehicle, veh_type)

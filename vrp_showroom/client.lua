@@ -1,5 +1,6 @@
 
 vRP = Proxy.getInterface("vRP")
+vRPg = Proxy.getInterface("vRP_garages")
 
 function deleteVehiclePedIsIn()
   local v = GetVehiclePedIsIn(GetPlayerPed(-1),false)
@@ -408,12 +409,8 @@ function vehSR_CloseCreator(vehicle,veh_type)
 			SetEntityVisible(ped,true)
 		else
 			deleteVehiclePedIsIn()
-			ok,id = vRP.getOwnedVehicleId({veh_type})
-			if ok then
-				vRP.despawnGarageVehicle({veh_type,100000})
-			end
 			vRP.teleport({-44.21378326416,-1079.1402587891,26.67050743103})
-			vRP.spawnGarageVehicle({veh_type, vehicle})
+			vRPg.spawnBoughtVehicle({veh_type, vehicle})
 			SetEntityVisible(ped,true)
 			FreezeEntityPosition(ped,false)
 		end
